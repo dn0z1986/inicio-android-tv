@@ -1,0 +1,7 @@
+# Clave de firma: cada uno genera la suya
+*.keystore
+
+# Compilación (el APK va en Releases)
+build/
+*.apk
+android-tv-launcher/tools/debug-cresta.jpg
