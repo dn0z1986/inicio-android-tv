@@ -1,5 +1,7 @@
 # Inicio TV — pantalla de inicio bonita para teles Android TV
 
+🇬🇧 [Read in English](README.en.md)
+
 Una pantalla de inicio "tipo Apple" para teles y cajas **Android TV** (Android 5 o más nuevo). Es la versión para tele de [hy300-proyector](https://github.com/dn0z1986/hy300-proyector).
 
 ![Pantalla de inicio](docs/inicio.png)
