@@ -6,8 +6,8 @@ Una pantalla de inicio "tipo Apple" para teles y cajas **Android TV** (Android 5
 
 - Fondo de un lago con montañas, y **la hora escondida detrás de las montañas** (efecto profundidad).
 - Botones grandes para **Jellyfin, Netflix, IPTV y YouTube**, más "Todas las apps" y Ajustes.
-- Accesos rápidos: **Wi‑Fi, Bluetooth, Entradas** (HDMI y canales), **Imagen**, **Reposo** y **Ajustes**.
-- Indicador de **Wi‑Fi** arriba a la derecha.
+- Arriba a la derecha, botones de **Wi‑Fi** (con el nombre de tu red) y **Bluetooth** (con el aparato conectado, por ejemplo unos auriculares). Se eligen con el mando y abren sus ajustes.
+- Accesos rápidos: **Entradas** (HDMI y canales), **Imagen**, **Reposo** y **Ajustes**.
 - Todo se maneja con las flechas y el OK del mando.
 
 ![Todas las apps](docs/todas-las-apps.png)

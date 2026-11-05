@@ -55,6 +55,12 @@
     box-shadow: 0 6px 20px rgba(0,0,0,.25);
   }
   #wifi.off { background: rgba(170,40,40,.85); }
+  #bt { background: rgba(15,47,69,.78); color: #fff; font-family: "Nunito", sans-serif; font-weight: 800; font-size: 26px; box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+  #bt.off { background: rgba(70,80,90,.7); }
+  #bt { margin-left: 16px; }   /* WebView 83 no tiene gap en flex */
+  #status .pill.focus { transform: scale(1.05); box-shadow: 0 0 0 3px rgba(255,255,255,.95), 0 10px 24px rgba(0,0,0,.35); }
+  .pill { max-width: 360px; }
+  .pill span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
   /* Nunito: letra redondeada para la fecha y la hora */
   @font-face { font-family: "Nunito"; font-weight: 800; src: url("nunito-800.woff2") format("woff2"); }
@@ -124,10 +130,10 @@
   /* Todas las apps */
   #drawer {
     position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: none;
-    background: rgba(8,18,24,.6);
-    backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+    background: rgba(9,16,20,.98);
     overflow-y: auto; scrollbar-width: none;
     padding: 90px 0 120px;
+    z-index: 50;
   }
   #drawer::-webkit-scrollbar { display: none; }
   #drawer.open { display: block; }
@@ -137,6 +143,7 @@
     height: 141px; border-radius: 24px; overflow: hidden;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     font-size: 21px; font-weight: 500; text-align: center; padding: 0 12px;
+    background: rgba(255,255,255,.08); border: 1.5px solid rgba(255,255,255,.18);
   }
   .dapp img.icon { width: 72px; height: 72px; margin-bottom: 10px; }
   .dapp img.banner { position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -157,9 +164,13 @@
   <div id="shade"></div>
 
   <div id="status">
-    <div class="pill" id="wifi">
+    <div class="pill tile" id="wifi" data-name="Wi‑Fi" data-action="android.settings.WIFI_SETTINGS">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2 8.8a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16.2a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1.2" fill="currentColor"/></svg>
       <span id="wifi-text">Conectado</span>
+    </div>
+    <div class="pill tile" id="bt" data-name="Bluetooth" data-component="com.android.tv.settings/.accessories.AddAccessoryActivity" data-action="android.settings.BLUETOOTH_SETTINGS">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10-5 5V2l5 5L7 17"/></svg>
+      <span id="bt-text">Bluetooth</span>
     </div>
   </div>
 
@@ -181,19 +192,13 @@
     </div>
   </div>
 
-  <!-- data-pkgs: apps de la tele que se prueban primero; data-action: pantalla estándar de Android -->
+  <!-- Se prueba en orden: data-component (pantalla de la marca), data-pkgs (app de la tele) y data-action (ajuste estándar) -->
   <div class="row" id="quick">
-    <div class="tile qs glass" data-name="Wi‑Fi" data-action="android.settings.WIFI_SETTINGS">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2 8.8a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16.2a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1.2" fill="currentColor"/></svg>Wi‑Fi
-    </div>
-    <div class="tile qs glass" data-name="Bluetooth" data-action="android.settings.BLUETOOTH_SETTINGS">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10-5 5V2l5 5L7 17"/></svg>Bluetooth
-    </div>
-    <div class="tile qs glass" data-name="Entradas" data-pkgs="com.google.android.tv,com.android.tv,com.mediatek.wwtv.tvcenter,com.sony.dtv.tvx,com.tcl.tv,com.xiaomi.mitv.tvplayer,org.droidtv.playtv" data-action="android.settings.SETTINGS">
+    <div class="tile qs glass" data-name="Entradas" data-component="com.tcl.sourcemananger/com.tcl.sourcemanager.MainActivity" data-pkgs="com.google.android.tv,com.android.tv,com.mediatek.wwtv.tvcenter,com.sony.dtv.tvx,com.tcl.tv,com.xiaomi.mitv.tvplayer,org.droidtv.playtv" data-action="android.settings.SETTINGS">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5M4 12h11M11 8l4 4-4 4"/></svg>Entradas
     </div>
     <div class="tile qs glass" data-name="Imagen" data-action="android.settings.DISPLAY_SETTINGS">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 21h6M12 17v4"/></svg>Imagen
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 21h6M12 17v4"/></svg>Imagen
     </div>
     <div class="tile qs glass" data-name="Reposo" data-action="screensaver">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 15.3A8.5 8.5 0 0 1 8.7 4a8.5 8.5 0 1 0 11.3 11.3z"/></svg>Reposo
@@ -231,12 +236,27 @@
   }
   tick(); setInterval(tick, 1000);
 
-  function updateWifi() {
-    const on = navigator.onLine;
-    document.getElementById('wifi').classList.toggle('off', !on);
-    document.getElementById('wifi-text').textContent = on ? 'Conectado' : 'Sin conexión';
+  // Botones de arriba: nombre de la red Wi‑Fi y aparato Bluetooth conectado (los da Android.netStatus)
+  function updateNet() {
+    let st = null;
+    try { st = (window.Android && Android.netStatus) ? JSON.parse(Android.netStatus()) : null; } catch (e) {}
+    const wifiEl = document.getElementById('wifi');
+    const wifiTxt = document.getElementById('wifi-text');
+    const btEl = document.getElementById('bt');
+    const btTxt = document.getElementById('bt-text');
+    if (st) {
+      wifiEl.classList.toggle('off', !st.online);
+      wifiTxt.textContent = st.online ? (st.ssid || 'Conectado') : 'Sin conexión';
+      btEl.classList.toggle('off', !st.btOn);
+      btTxt.textContent = st.btOn ? (st.bt || 'Bluetooth') : 'Bluetooth';
+    } else {
+      const on = navigator.onLine;
+      wifiEl.classList.toggle('off', !on);
+      wifiTxt.textContent = on ? 'Conectado' : 'Sin conexión';
+    }
   }
-  addEventListener('online', updateWifi); addEventListener('offline', updateWifi); updateWifi();
+  addEventListener('online', updateNet); addEventListener('offline', updateNet); updateNet();
+  setInterval(updateNet, 8000);
 
   let toastTimer;
   function toast(msg) {
@@ -248,8 +268,12 @@
   }
 
   // --- Pantalla principal ---
-  const rows = [...document.querySelectorAll('.row')].map(r => [...r.querySelectorAll('.tile')]);
-  let r = 0, c = 0;
+  // Fila 0: botones de Wi‑Fi y Bluetooth de arriba; se empieza en la fila de apps
+  const rows = [
+    [...document.querySelectorAll('#status .tile')],
+    ...[...document.querySelectorAll('.row')].map(r => [...r.querySelectorAll('.tile')])
+  ];
+  let r = 1, c = 0;
   function focusHome() {
     document.querySelectorAll('.tile.focus').forEach(t => t.classList.remove('focus'));
     rows[r][c].classList.add('focus');
@@ -260,7 +284,7 @@
     if (action === 'drawer') return openDrawer();
     if (!Native) return toast('Abriendo ' + tile.dataset.name + '…');
     if (action === 'screensaver') return Native.screensaver();
-    if (tile.dataset.component && Native.component(tile.dataset.component)) return;
+    if (tile.dataset.component && tile.dataset.component.split(',').some(cmp => Native.component(cmp))) return;
     if (tile.dataset.pkgs && Native.launch(tile.dataset.pkgs)) return;
     if (action) return Native.settings(action);
     if (tile.dataset.pkgs) toast(tile.dataset.name + ' no está instalada');
@@ -283,7 +307,7 @@
     grid.innerHTML = '';
     for (const a of apps) {
       const el = document.createElement('div');
-      el.className = 'tile dapp glass';
+      el.className = 'tile dapp';
       el.dataset.pkg = a.pkg;
       el.dataset.name = a.label;
       if (a.img && a.wide) {
@@ -340,7 +364,7 @@
     focusHome();
   };
   window.onResumeHome = function () {
-    tick();
+    tick(); updateNet();
     if (drawer.classList.contains('open')) closeDrawer();
   };
 

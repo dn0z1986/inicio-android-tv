@@ -211,5 +211,43 @@ public class MainActivity extends Activity {
             });
             return new JSONArray(list).toString();
         }
+
+        /** Estado de red para los botones de arriba: {online, ssid, btOn, bt}. */
+        @JavascriptInterface
+        public String netStatus() {
+            JSONObject o = new JSONObject();
+            try {
+                android.net.ConnectivityManager cm = (android.net.ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+                android.net.NetworkInfo ni = cm != null ? cm.getActiveNetworkInfo() : null;
+                o.put("online", ni != null && ni.isConnected());
+                String ssid = "";
+                android.net.wifi.WifiManager wm = (android.net.wifi.WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+                if (wm != null && wm.isWifiEnabled()) {
+                    android.net.wifi.WifiInfo wi = wm.getConnectionInfo();
+                    if (wi != null && wi.getSSID() != null) {
+                        String s = wi.getSSID().replace("\"", "");
+                        if (!s.isEmpty() && !s.equalsIgnoreCase("<unknown ssid>") && !s.equals("0x")) ssid = s;
+                    }
+                }
+                o.put("ssid", ssid);
+                String bt = "";
+                android.bluetooth.BluetoothAdapter ba = android.bluetooth.BluetoothAdapter.getDefaultAdapter();
+                boolean btOn = ba != null && ba.isEnabled();
+                o.put("btOn", btOn);
+                if (btOn) {
+                    // isConnected() está oculto en el SDK; se llama por reflexión
+                    for (android.bluetooth.BluetoothDevice d : ba.getBondedDevices()) {
+                        try {
+                            java.lang.reflect.Method m = d.getClass().getMethod("isConnected");
+                            if (Boolean.TRUE.equals(m.invoke(d))) { bt = d.getName(); break; }
+                        } catch (Exception ignored) {}
+                    }
+                }
+                o.put("bt", bt);
+            } catch (Exception e) {
+                try { o.put("err", e.toString()); } catch (Exception ignored) {}
+            }
+            return o.toString();
+        }
     }
 }
