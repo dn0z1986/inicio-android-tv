@@ -32,12 +32,16 @@ if ($code -ne 0) { throw "Falló: aapt add" }
 
 # Clave de firma propia; se conserva para poder actualizar la app sin desinstalarla
 $ks = "inicio.keystore"
+# Contraseña de la clave de firma: variable INICIO_KS_PASS o se pide al compilar (está en Bitwarden)
+if (-not $env:INICIO_KS_PASS) {
+  $env:INICIO_KS_PASS = [Net.NetworkCredential]::new('', (Read-Host 'Contraseña de inicio.keystore' -AsSecureString)).Password
+}
 if (-not (Test-Path $ks)) {
   $ErrorActionPreference = 'Continue'   # keytool escribe en stderr aunque vaya bien
-  & keytool -genkeypair -keystore $ks -storepass android -keypass android -alias inicio `
+  & keytool -genkeypair -keystore $ks -storepass:env INICIO_KS_PASS -keypass:env INICIO_KS_PASS -alias inicio `
     -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Inicio TV" 2>&1 | Out-Null; Check "keytool"
   $ErrorActionPreference = 'Stop'
 }
-& "$bt\apksigner.bat" sign --ks $ks --ks-pass pass:android --out "$out\Inicio.apk" "$out\aligned.apk"; Check "apksigner"
+& "$bt\apksigner.bat" sign --ks $ks --ks-pass env:INICIO_KS_PASS --out "$out\Inicio.apk" "$out\aligned.apk"; Check "apksigner"
 
 "OK: $((Resolve-Path "$out\Inicio.apk").Path)  ({0:N0} KB)" -f ((Get-Item "$out\Inicio.apk").Length / 1KB)
