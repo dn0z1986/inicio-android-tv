@@ -6,6 +6,8 @@ Una pantalla de inicio "tipo Apple" para teles y cajas **Android TV** (Android 5
 
 ![Pantalla de inicio](docs/inicio.png)
 
+> ⭐ **Si te gusta, dale una estrella** (arriba a la derecha): así más gente lo encuentra.
+
 - Fondo de un lago con montañas, y **la hora escondida detrás de las montañas** (efecto profundidad).
 - Botones grandes para **Jellyfin, Netflix, IPTV y YouTube**, más "Todas las apps" y Ajustes.
 - Arriba a la derecha, botones de **Wi‑Fi** (con el nombre de tu red) y **Bluetooth** (con el aparato conectado, por ejemplo unos auriculares). Se eligen con el mando y abren sus ajustes.
@@ -15,6 +17,21 @@ Una pantalla de inicio "tipo Apple" para teles y cajas **Android TV** (Android 5
 ![Todas las apps](docs/todas-las-apps.png)
 
 ## Instalarlo
+
+### Sin ordenador
+
+1. Pasa el APK a la tele de una de estas dos formas:
+   - Con la app **Downloader** (de AFTVnews, está en Google Play). Escribe esta dirección:
+     ```
+     https://github.com/dn0z1986/inicio-android-tv/releases/latest/download/Inicio-AndroidTV.apk
+     ```
+   - O descarga `Inicio-AndroidTV.apk` de [Releases](../../releases) en otro aparato, cópialo a un **pendrive** y ábrelo con un explorador de archivos en la tele.
+2. Si te pide permiso para **instalar apps desconocidas**, dáselo y pulsa **Instalar**.
+3. Pulsa el botón **Inicio** del mando. Si te pregunta qué pantalla de inicio usar, elige **Inicio** y **Siempre**.
+
+Si no te pregunta y sigue saliendo la pantalla de la tele (pasa casi siempre en Google TV), la app ya está instalada (la verás en la lista de apps), pero para ponerla como pantalla de inicio hay que hacer una vez el paso 5 de abajo con un ordenador.
+
+### Con ordenador (ADB)
 
 Necesitas un ordenador con **ADB** (las [platform-tools de Android](https://developer.android.com/tools/releases/platform-tools)), en la misma Wi‑Fi que la tele o conectado por USB.
 

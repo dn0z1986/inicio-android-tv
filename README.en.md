@@ -6,6 +6,8 @@ An Apple‑style home screen for **Android TV** sets and boxes (Android 5 or new
 
 ![Home screen](docs/inicio.png)
 
+> ⭐ **If you like it, give it a star** (top right): it helps other people find it.
+
 - A lake and mountains wallpaper with **the clock hidden behind the mountains** (depth effect).
 - Big tiles for **Jellyfin, Netflix, IPTV and YouTube**, plus "All apps" and Settings.
 - **Wi‑Fi** (shows your network name) and **Bluetooth** (shows the connected device, e.g. headphones) buttons in the top‑right corner. Select them with the remote to open their settings.
@@ -17,6 +19,21 @@ An Apple‑style home screen for **Android TV** sets and boxes (Android 5 or new
 ![All apps](docs/todas-las-apps.png)
 
 ## Install
+
+### Without a computer
+
+1. Get the APK onto the TV in one of these two ways:
+   - With the **Downloader** app (by AFTVnews, available on Google Play). Enter this address:
+     ```
+     https://github.com/dn0z1986/inicio-android-tv/releases/latest/download/Inicio-AndroidTV.apk
+     ```
+   - Or download `Inicio-AndroidTV.apk` from [Releases](../../releases) on another device, copy it to a **USB stick** and open it with a file manager on the TV.
+2. If it asks for permission to **install unknown apps**, allow it and press **Install**.
+3. Press the **Home** button on the remote. If it asks which home screen to use, choose **Inicio** and **Always**.
+
+If it doesn't ask and the TV's own home screen keeps showing (almost always the case on Google TV), the app is installed (you'll find it in the app list), but to make it the home screen you need to do step 5 below once from a computer.
+
+### With a computer (ADB)
 
 You need a computer with **ADB** ([Android platform-tools](https://developer.android.com/tools/releases/platform-tools)), on the same Wi‑Fi as the TV or connected by USB.
 
